@@ -15,4 +15,9 @@ router.patch(
     controller.changeMulti
 );
 
+router.delete(
+    "/delete/:id",
+    controller.deleteItem
+);
+
 module.exports = router;
