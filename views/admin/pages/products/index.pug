@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/filter-state.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
 
 block main
   h1(class="mb-4") #{pageTitle}
@@ -18,9 +19,16 @@ block main
   .card.mb-3
     .card-header Danh sách
     .card-body
-      table.table.table-hover.table-sm
+      +form-change-multi(`/${prefixAdmin}/products/change-multi?_method=PATCH`)
+
+      table.table.table-hover.table-sm(checkbox-multi)
         thead
           tr
+            td
+              input(
+                type="checkbox"
+                name="checkall"
+              )
             th STT
             th Hình ảnh
             th Tiêu đề
@@ -30,7 +38,13 @@ block main
 
         tbody
           each item, index in products
-            tr 
+            tr
+              td
+                input(
+                  type="checkbox"
+                  name="id"
+                  value=item.id
+                ) 
               td #{index + 1}
               td
                 img(
@@ -43,10 +57,29 @@ block main
               td #{item.price}$
               td
                 if(item.status == "active")
-                  a(href="#" class="badge badge-success") Hoạt động
+                  a(
+                    href="javascript:;"
+                    class="badge badge-success"
+                    data-id=item.id
+                    data-status=item.status
+                    button-change-status
+                  ) Hoạt động
                 else
-                  a(href="#" class="badge badge-danger") Dừng hoạt động
+                  a(
+                    href="javascript:;"
+                    class="badge badge-danger"
+                    data-id=item.id
+                    data-status=item.status
+                    button-change-status
+                  ) Dừng hoạt động
               td
                 button(class="btn btn-warning btn-sm") Sửa
                 button(class="btn btn-danger btn-sm ml-1") Xóa
   +pagination(pagination)
+
+  form(
+    form-change-status
+    action=""
+    method="POST"
+    data-path=`/${prefixAdmin}/products/change-status`
+  )

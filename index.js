@@ -1,5 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const methodOverride = require('method-override');
+const bodyParser = require('body-parser');
 const routesClient = require("./routes/client/index.route");
 const routesAdmin = require("./routes/admin/index.route");
 const database = require("./config/database");
@@ -11,6 +13,11 @@ database.connect();
 
 const app = express();
 const port = process.env.PORT;
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(methodOverride('_method'));
 
 app.set("views", "./views");
 app.set("view engine", "pug");
