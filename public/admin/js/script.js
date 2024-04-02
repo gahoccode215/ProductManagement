@@ -136,7 +136,15 @@ if (formChangeMulti) {
 
       inputsChecked.forEach(input => {
         const id = input.value;
-        ids.push(id);
+        if (type == "change-position") {
+          const position = input
+            .closest("tr")
+            .querySelector("input[name='position']").value;
+
+          ids.push(`${id}-${position}`);
+        } else {
+          ids.push(id);
+        }
       });
 
       inputIds.value = ids.join(", ");
@@ -172,3 +180,33 @@ if (buttonsDelete.length > 0) {
   });
 }
 // Delete Item
+
+// Show Alert
+const showAlert = document.querySelector("[show-alert]");
+if (showAlert) {
+  const time = parseInt(showAlert.getAttribute("data-time"));
+  setTimeout(() => {
+    showAlert.classList.add("alert-hidden");
+  }, time);
+
+  const closeAlert = showAlert.querySelector("[close-alert]");
+  closeAlert.addEventListener("click", () => {
+    showAlert.classList.add("alert-hidden");
+  });
+}
+// End Show Alert
+
+// Preview Image
+const uploadImage = document.querySelector("[upload-image]");
+if (uploadImage) {
+  const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
+  const uploadImagePreview = uploadImage.querySelector("[upload-image-preview]");
+
+  uploadImageInput.addEventListener("change", (event) => {
+    const [file] = uploadImageInput.files;
+    if (file) {
+      uploadImagePreview.src = URL.createObjectURL(file);
+    }
+  });
+}
+// End Preview Image

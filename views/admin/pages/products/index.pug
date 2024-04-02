@@ -3,8 +3,10 @@ include ../../mixins/filter-state.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
+include ../../mixins/alert.pug
 
 block main
+  +alert-success(5000)
   h1(class="mb-4") #{pageTitle}
 
   .card.mb-3
@@ -19,7 +21,14 @@ block main
   .card.mb-3
     .card-header Danh sách
     .card-body
-      +form-change-multi(`/${prefixAdmin}/products/change-multi?_method=PATCH`)
+      .row
+        .col-8
+          +form-change-multi(`/${prefixAdmin}/products/change-multi?_method=PATCH`)
+        .col-4.text-right
+          a(
+            href=`/${prefixAdmin}/products/create`
+            class="btn btn-outline-success"
+          ) + Thêm mới
 
       table.table.table-hover.table-sm(checkbox-multi)
         thead
@@ -33,6 +42,7 @@ block main
             th Hình ảnh
             th Tiêu đề
             th Giá
+            th Vị trí
             th Trạng thái
             th Hành động
 
@@ -55,6 +65,14 @@ block main
                 )
               td #{item.title}
               td #{item.price}$
+              td
+                input(
+                  type="number"
+                  name="position"
+                  value=item.position
+                  style="width: 60px"
+                  min="1"
+                )
               td
                 if(item.status == "active")
                   a(
