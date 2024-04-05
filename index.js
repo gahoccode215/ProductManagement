@@ -6,6 +6,7 @@ const routesClient = require("./routes/client/index.route");
 const routesAdmin = require("./routes/admin/index.route");
 const database = require("./config/database");
 const systemConfig = require("./config/system");
+const path = require('path');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -27,6 +28,10 @@ app.set("view engine", "pug");
 
 
 app.use(express.static("public"));
+
+
+/* New Route to the TinyMCE Node module */
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // flash
 app.use(cookieParser('KJJSLKASASASA'));

@@ -1,0 +1,32 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  if(product.title)
+    h1(class="mb-4") #{product.title}
+
+
+  if(product.parent_id)
+    div(class="mb-4") Danh mục cha: <b>#{product.parentTitle}</b>
+
+
+  if (product.thumbnail)
+    div(class="mb-4")
+      img(
+        src=product.thumbnail
+        style="width: 200px"
+      )
+
+  if (product.status)
+    div(class="mb-4")
+      span Trạng thái:
+      if (product.status === "active")
+        span(class="badge badge-success") Hoạt động
+      else
+        span(class="badge badge-danger") Dừng hoạt động
+
+  if (product.position)
+    div(class="mb-4") Vị trí: <b>#{product.position}</b>
+
+  if (product.description)
+    div(class="mb-4") !{product.description}
