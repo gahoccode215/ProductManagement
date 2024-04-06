@@ -1,5 +1,6 @@
 const Product = require("../../models/product.model");
 const ProductCategory = require("../../models/product-category.model");
+const Account = require("../../models/account.model");
 const filterStatusHelper = require("../../helpers/filter-state.helper");
 const paginationHelper = require("../../helpers/pagination.helper");
 const createTreeHelper = require("../../helpers/create-tree.helper");
@@ -46,6 +47,17 @@ module.exports.index = async (req, res) => {
             .limit(objectPagination.limitItems)
             .skip(objectPagination.skip);
 
+
+        for (const product of products) {
+            const account = await Account.findOne({
+                _id: product.createdBy.accountId
+            });
+
+            if (account) {
+                product.createdBy.fullName = account.fullName;
+            }
+        }
+
         res.render("admin/pages/products/index", {
             pageTitle: "Danh sách sản phẩm",
             products: products,
@@ -65,10 +77,16 @@ module.exports.changeStatus = async (req, res) => {
         const status = req.params.status;
         const id = req.params.id;
 
+        const objectUpdatedBy = {
+            accountId: res.locals.user.id,
+            updatedAt: new Date()
+        };
+
         await Product.updateOne({
             _id: id
         }, {
-            status: status
+            status: status,
+            $push: { updatedBy: objectUpdatedBy }
         });
 
         req.flash('success', 'Cập nhật trạng thái thành công!');
@@ -100,7 +118,10 @@ module.exports.changeMulti = async (req, res) => {
                     _id: { $in: ids }
                 }, {
                     deleted: true,
-                    deletedAt: new Date()
+                    deletedBy: {
+                        accountId: res.locals.user.id,
+                        deletedAt: new Date()
+                    }
                 });
                 req.flash('success', 'Xóa sản phẩm thành công!');
                 break;
@@ -141,7 +162,10 @@ module.exports.deleteItem = async (req, res) => {
             _id: id
         }, {
             deleted: true,
-            deletedAt: new Date()
+            deletedBy: {
+                accountId: res.locals.user.id,
+                deletedAt: new Date()
+            }
         });
         req.flash('success', 'Xóa sản phẩm thành công!');
     } catch (error) {
@@ -178,9 +202,10 @@ module.exports.createPost = async (req, res) => {
             req.body.position = parseInt(req.body.position);
         }
 
-        // if (req.file && req.file.filename) {
-        //     req.body.thumbnail = `/uploads/${req.file.filename}`;
-        // }
+        req.body.createdBy = {
+            accountId: res.locals.user.id,
+            createdAt: new Date()
+        };
 
         const product = new Product(req.body);
         await product.save();
@@ -233,10 +258,19 @@ module.exports.editPatch = async (req, res) => {
             req.body.thumbnail = `/uploads/${req.file.filename}`;
         }
 
+
+        const objectUpdatedBy = {
+            accountId: res.locals.user.id,
+            updatedAt: new Date()
+        };
+
         await Product.updateOne({
             _id: id,
             deleted: false
-        }, req.body);
+        }, {
+            ...req.body,
+            $push: { updatedBy: objectUpdatedBy }
+        });
 
         req.flash("success", "Cập nhật sản phẩm thành công!");
 
@@ -258,7 +292,7 @@ module.exports.detail = async (req, res) => {
 
         console.log(product);
 
-        
+
         res.render("admin/pages/products/detail", {
             pageTitle: "Chi tiết sản phẩm",
             product: product

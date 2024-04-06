@@ -7,6 +7,7 @@ const routesAdmin = require("./routes/admin/index.route");
 const database = require("./config/database");
 const systemConfig = require("./config/system");
 const path = require('path');
+const moment = require('moment');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -41,6 +42,7 @@ app.use(flash());
 
 // App Local Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
 // Routes Admin
 routesAdmin(app);
