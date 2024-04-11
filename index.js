@@ -36,7 +36,7 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 
 // flash
 app.use(cookieParser('KJJSLKASASASA'));
-app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 // End flash
 
@@ -48,6 +48,14 @@ app.locals.moment = moment;
 routesAdmin(app);
 // Routes Client
 routesClient(app);
+
+// 404 Not Found
+app.get("*", (req, res) => {
+    res.render("client/pages/errors/404", {
+        pageTitle: "404 Not Found",
+    });
+    // res.redirect("/");
+});
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);

@@ -6,7 +6,7 @@ header.header
       .col-3
         .inner-logo
           a(href="/")
-            img(src="/images/logo.svg", alt="Logo")
+            img(src=settingsGeneral.logo, alt="Logo")
       .col-5
         form(
           action="/search"
@@ -33,3 +33,15 @@ header.header
               a(href="/products") Sản phẩm
               if(layoutCategoryProducts)
                 +sub-menu(layoutCategoryProducts)
+            li
+              a(href="/cart") Giỏ hàng (#{cart ? cart.products.length : 0})
+            if(user)
+              li
+                a(href="/user/info") Tài khoản
+              li
+                a(href="/user/logout") Đăng xuất
+            else
+              li
+                a(href="/user/login") Đăng nhập
+              li
+                a(href="/user/register") Đăng ký

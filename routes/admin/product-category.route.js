@@ -8,7 +8,7 @@ const controller = require("../../controllers/admin/product-category.controller"
 
 const validate = require("../../validates/admin/product-category.validate");
 
-const uploadCloud = require("../../middewares/admin/uploadCloud.middleware");
+const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware");
 
 router.get("/", controller.index);
 
