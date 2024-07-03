@@ -21,7 +21,7 @@ block main
             th STT
             th Avatar
             th Họ tên
-            th Phân quyền
+            //- th Phân quyền
             th Email
             th Trạng thái
             th Hành động
@@ -38,7 +38,7 @@ block main
                   height="auto"
                 )
               td #{item.fullName}
-              td #{item.role.title}
+              //- td #{item.role.title}
               td #{item.email}
               td
                 if (item.status === "active")

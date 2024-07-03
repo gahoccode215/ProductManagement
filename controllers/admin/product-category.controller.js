@@ -61,6 +61,7 @@ module.exports.create = async (req, res) => {
     });
 
     const newRecords = createTreeHelper(records);
+    console.log(newRecords);
 
     res.render("admin/pages/products-category/create", {
         pageTitle: "Thêm mới danh mục sản phẩm",

@@ -26,9 +26,9 @@ block main
       .card.mb-4
         .card-header Danh mục sản phẩm
         .card-body
-          p Số lượng: <b>5</b>
-          p Hoạt động: <b>3</b>
-          p Dừng hoạt động: <b>2</b>
+          p Số lượng: <b>#{statistic.categoryProduct.total}</b>
+          p Hoạt động: <b>#{statistic.categoryProduct.active}</b>
+          p Dừng hoạt động: <b>#{statistic.categoryProduct.inactive}</b>
 
     .col-6
       .card.mb-4
@@ -42,14 +42,14 @@ block main
       .card.mb-4
         .card-header Tài khoản admin
         .card-body
-          p Số lượng: <b>5</b>
-          p Hoạt động: <b>3</b>
-          p Dừng hoạt động: <b>2</b>
+          p Số lượng: <b>#{statistic.account.total}</b>
+          p Hoạt động: <b>#{statistic.account.active}</b>
+          p Dừng hoạt động: <b>#{statistic.account.inactive}</b>
 
     .col-6
       .card.mb-4
         .card-header Tài khoản client
         .card-body
-          p Số lượng: <b>5</b>
-          p Hoạt động: <b>3</b>
-          p Dừng hoạt động: <b>2</b>
+          p Số lượng: <b>#{statistic.user.total}</b>
+          p Hoạt động: <b>#{statistic.user.active}</b>
+          p Dừng hoạt động: <b>#{statistic.user.inactive}</b>

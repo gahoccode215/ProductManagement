@@ -201,11 +201,14 @@ const uploadImage = document.querySelector("[upload-image]");
 if (uploadImage) {
   const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
   const uploadImagePreview = uploadImage.querySelector("[upload-image-preview]");
-
+  console.log(uploadImageInput);
+  console.log(uploadImagePreview)
   uploadImageInput.addEventListener("change", (event) => {
     const [file] = uploadImageInput.files;
+    console.log(file)
     if (file) {
       uploadImagePreview.src = URL.createObjectURL(file);
+      console.log(uploadImagePreview)
     }
   });
 }

@@ -12,7 +12,9 @@
     font-weight: 700;
     color: #fff;
 }
-
+.center{
+    justify-content: center;
+  }
 /* End Header */
 
 /* Body */

@@ -21,9 +21,9 @@ module.exports.index = async (req, res) => {
         const role = await Role.findOne({
             _id: record.role_id
         });
-        record.role = role;
+        record.role =  role;
     }
-
+    console.log(records);
     res.render("admin/pages/accounts/index", {
         pageTitle: "Danh sách tài khoản",
         records: records,

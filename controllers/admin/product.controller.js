@@ -46,8 +46,7 @@ module.exports.index = async (req, res) => {
             .sort(sort)
             .limit(objectPagination.limitItems)
             .skip(objectPagination.skip);
-
-
+        
         for (const product of products) {
             const account = await Account.findOne({
                 _id: product.createdBy.accountId
@@ -207,7 +206,7 @@ module.exports.createPost = async (req, res) => {
             createdAt: new Date()
         };
 
-        const product = new Product(req.body);
+        const product = new Product(req.body); 
         await product.save();
 
         req.flash("success", "Thêm mới sản phẩm thành công!");
