@@ -4,6 +4,7 @@
 
 * A Javascript Project to build a WebApp Server-side to sell product 
 * Using NodeJS, Pug Engine following MVC Model 
+* Using MongoDB for database
 * and more...
 
 # Screenshots
